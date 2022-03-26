@@ -4,8 +4,5 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes:
-  - enabled: 1
-    path: Assets/Important/Scenes/Realtime/RealTime_Lighting&Occlusion_Village.unity
-    guid: 14f2cefd44f0bbf479d901625d1ac937
+  m_Scenes: []
   m_configObjects: {}
