@@ -6,6 +6,7 @@ public class ControlSwitch : MonoBehaviour
     public KeyCode toggleKey = KeyCode.C;
     public GameObject manualController;
     public GameObject automaticController;
+    public GameObject staticController;
 
     [Header("FSP")]
     public int targetFPS = 60;
@@ -32,9 +33,7 @@ public class ControlSwitch : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(toggleKey))
-        {
             Toggle();
-        }
     }
 
     void Toggle()
@@ -45,8 +44,16 @@ public class ControlSwitch : MonoBehaviour
 
     void SetControllerState(bool useAutomaticControl)
     {
+        /**
+        if (manualController != null)
         manualController.SetActive(!useAutomaticControl);
-        automaticController.SetActive(useAutomaticControl);
+        /**/
+
+        if (automaticController != null)
+            automaticController.SetActive(useAutomaticControl);
+
+        if (staticController != null)
+            staticController.SetActive(!useAutomaticControl);
     }
 
     bool HasCommandLineArgument(string argument)

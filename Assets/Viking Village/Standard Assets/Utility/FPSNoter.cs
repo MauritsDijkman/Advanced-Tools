@@ -47,8 +47,8 @@ public class FPSNoter : MonoBehaviour
         }
 
         averageFPS = totalFPS / totalLines;
-        File.AppendAllText(path, $"Average FPS: {averageFPS.ToString()}\n");
-        File.AppendAllText(path, $"Total FPS measured: {totalLines.ToString()}\n\n");
+        File.AppendAllText(path, $"Average FPS: {averageFPS}\n");
+        File.AppendAllText(path, $"Total FPS measured: {totalLines}\n\n");
         File.AppendAllText(path, $"All FPS values:\n");
 
         foreach (int FPS_Value in currentFPS_Time)
@@ -57,7 +57,7 @@ public class FPSNoter : MonoBehaviour
             File.AppendAllText(path, content);
         }
 
-        Debug.Log("Values are written in the document!");
+        Debug.Log("FPS values are written in the document!");
     }
 
     private IEnumerator Timer(float timeBeforeQuit)
