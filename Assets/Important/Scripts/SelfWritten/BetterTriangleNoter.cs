@@ -7,14 +7,14 @@ public class BetterTriangleNoter : MonoBehaviour
 {
     private string path = "";
 
-    private int triangleCount = 0;
     private List<int> triangleList = new List<int>();
 
     private bool measureValues = true;
-    private bool nameSet = false;
 
     [Header("File title")]
     [SerializeField] private string fileTitle = "Triangle_Log";
+    private string originalFileTitle = "";
+    private int fileNumer = 1;
 
     [Header("Timer")]
     [SerializeField] private float timeBeforeQuit = 69f;
@@ -22,16 +22,17 @@ public class BetterTriangleNoter : MonoBehaviour
 
     private void Start()
     {
+        fileNumer = 1;
         measureValues = false;
-        nameSet = false;
 
-        CheckFile();
+        originalFileTitle = fileTitle;
+
         StartCoroutine(Timer(timeBeforeQuit, howManyTimes));
     }
 
     private void CheckFile()
     {
-        path = $"{Application.dataPath}/{fileTitle}.txt";
+        path = $"{Application.dataPath}/{fileTitle}.csv";
 
         if (File.Exists(path))
             File.WriteAllText(path, "");
@@ -43,8 +44,9 @@ public class BetterTriangleNoter : MonoBehaviour
     {
         if (measureValues)
         {
-            triangleCount = UnityEditor.UnityStats.triangles;
-            triangleList.Add(triangleCount);
+            //triangleCount = UnityEditor.UnityStats.triangles;
+            //triangleList.Add(triangleCount);
+            triangleList.Add(UnityEditor.UnityStats.triangles);
         }
     }
 
@@ -65,20 +67,23 @@ public class BetterTriangleNoter : MonoBehaviour
 
     private void WriteValues()
     {
-        if (!nameSet)
-        {
-            File.AppendAllText(path, $"{fileTitle}\n\n");
-            nameSet = true;
-        }
+        if (fileNumer >= 1)
+            fileTitle = $"{originalFileTitle}{fileNumer++}";
 
-        triangleList.Sort();
+        CheckFile();
 
-        File.AppendAllText(path, $"Highest triangle count: {triangleList[triangleList.Count - 1]}\n");
-        File.AppendAllText(path, $"Lowest triangle count: {triangleList[0]}\n");
+        File.AppendAllText(path, $"{fileTitle}\n\n");
+
         File.AppendAllText(path, $"Total triangle values measured: {triangleList.Count}\n");
-        File.AppendAllText(path, $"\n\n\n");
+        File.AppendAllText(path, $"\n\n");
+
+        foreach (int triangleValue in triangleList)
+            File.AppendAllText(path, $"{triangleValue}\n");
+
+        File.AppendAllText(path, $"=GEMIDDELDE(A6:A{triangleList.Count + 5})\n");
 
         triangleList.Clear();
+
 
         Debug.Log("Triangle values are written in the document!");
     }
