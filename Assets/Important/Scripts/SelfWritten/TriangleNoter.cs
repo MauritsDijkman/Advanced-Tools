@@ -45,12 +45,26 @@ public class TriangleNoter : MonoBehaviour
 
     private void WriteValues()
     {
-        File.AppendAllText(path, $"{fileTitle.ToString()}\n\n");
+        File.AppendAllText(path, $"{fileTitle}\n\n");
+
+        //int totalLines = 0;
+        //int totalTriangleAmount = 0;
+        //int averageTriangleAmount = 0;
+
+        //foreach (int triangleAmount in triangleList)
+        //{
+        //    totalLines++;
+        //    totalTriangleAmount += triangleAmount;
+        //}
+
+        //averageTriangleAmount = totalTriangleAmount / totalLines;
 
         triangleList.Sort();
 
+        //File.AppendAllText(path, $"Average triangles measured: {averageTriangleAmount}\n");
         File.AppendAllText(path, $"Highest triangle count: {triangleList[triangleList.Count - 1]}\n");
         File.AppendAllText(path, $"Lowest triangle count: {triangleList[0]}\n\n");
+        //File.AppendAllText(path, $"Total triangle amount: {totalTriangleAmount}\n\n");
 
         File.AppendAllText(path, $"Total triangle values measured: {triangleList.Count}\n");
         File.AppendAllText(path, $"All triangle values (lowest to highest):\n");

@@ -34,7 +34,7 @@ public class FPSNoter : MonoBehaviour
 
     private void WriteValues()
     {
-        File.AppendAllText(path, $"{fileTitle.ToString()}\n\n");
+        File.AppendAllText(path, $"{fileTitle}\n\n");
 
         int totalLines = 0;
         int totalFPS = 0;
