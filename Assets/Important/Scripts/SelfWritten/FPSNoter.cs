@@ -24,8 +24,10 @@ public class FPSNoter : MonoBehaviour
 
     private void CheckFile()
     {
+        // Create path with the given file title
         path = $"{Application.dataPath}/{fileTitle}.txt";
 
+        // Check if file exists and clear the whole document
         if (File.Exists(path))
             File.WriteAllText(path, "");
         else if (!File.Exists(path))
@@ -34,29 +36,29 @@ public class FPSNoter : MonoBehaviour
 
     private void WriteValues()
     {
+        // Put the file title at the top of the document
         File.AppendAllText(path, $"{fileTitle}\n\n");
 
-        int totalLines = 0;
+        // Create integers for later
         int totalFPS = 0;
         int averageFPS = 0;
 
+        // Add the current FPS value to a list
         foreach (int FPS_Value in currentFPS_Time)
-        {
-            totalLines++;
             totalFPS += FPS_Value;
-        }
 
-        averageFPS = totalFPS / totalLines;
+        // Calculate the average FPS
+        averageFPS = totalFPS / currentFPS_Time.Count;
+
+        // Put the average FPS, total FPS measured and all individual FPS values in the document
         File.AppendAllText(path, $"Average FPS: {averageFPS}\n");
-        File.AppendAllText(path, $"Total FPS measured: {totalLines}\n\n");
+        File.AppendAllText(path, $"Total FPS measured: {currentFPS_Time.Count}\n\n");
+
         File.AppendAllText(path, $"All FPS values:\n");
-
         foreach (int FPS_Value in currentFPS_Time)
-        {
-            string content = FPS_Value.ToString() + "\n";
-            File.AppendAllText(path, content);
-        }
+            File.AppendAllText(path, $"{FPS_Value}\n");
 
+        // Debug line
         Debug.Log("FPS values are written in the document!");
     }
 
@@ -64,7 +66,7 @@ public class FPSNoter : MonoBehaviour
     {
         yield return new WaitForSeconds(timeBeforeQuit);
 
-        WriteValues();
-        Application.Quit();
+        WriteValues();      // Write all the values in the document
+        Application.Quit(); // Close the application (only works with a build)
     }
 }
